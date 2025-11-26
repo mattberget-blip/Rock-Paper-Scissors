@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <script>
+      // get human choice - getHumanChoice
+      // get computer choice - getComputerChoice
+      // play a round - playRound
+      // keep score
+      // play game (5 rounds) - playGame
+
+      console.log("Initializing game - setting up scores");
+      let humanScore = 0;
+      console.log("humanScore initialized to:", humanScore);
+      let computerScore = 0;
+      console.log("computerScore initialized to:", computerScore);
+
+      function getHumanChoice() {
+        console.log("getHumanChoice() called");
+        console.log("Prompting user for choice");
+        const humanChoice = prompt("Rock, Paper, or Scissors?");
+        console.log("User entered:", humanChoice);
+        const result = humanChoice ? humanChoice.toLowerCase() : "";
+        console.log("Returning normalized choice:", result);
+        return result;
+      }
+
+      function getComputerChoice() {
+        console.log("getComputerChoice() called");
+        const randomNumber = Math.random();
+        console.log("Random number generated:", randomNumber);
+
+        if (randomNumber <= 0.333) {
+          console.log("Random number <= 0.333, returning 'rock'");
+          return "rock";
+        } else if (randomNumber <= 0.666) {
+          console.log("Random number <= 0.666, returning 'paper'");
+          return "paper";
+        } else {
+          console.log("Random number > 0.666, returning 'scissors'");
+          return "scissors";
+        }
+        // if nubmer is 0 - 0.33
+        // return rock
+        // number is 0.34 - 0.66
+        // return paper
+        // else
+        // return scissors
+      }
+
+      function playRound() {
+        console.log("playRound() called - starting new round");
+        const humanChoice = getHumanChoice();
+        console.log("Human choice received:", humanChoice);
+        const computerChoice = getComputerChoice();
+        console.log("Computer choice received:", computerChoice);
+
+        console.log("Checking human choice type");
+        const isHumanChoiceRock = humanChoice === "rock";
+        console.log("isHumanChoiceRock:", isHumanChoiceRock);
+        const isHumanChoicePaper = humanChoice === "paper";
+        console.log("isHumanChoicePaper:", isHumanChoicePaper);
+        const isHumanChoiceScissors = humanChoice === "scissors";
+        console.log("isHumanChoiceScissors:", isHumanChoiceScissors);
+
+        console.log("Checking computer choice type");
+        const isComputerChoiceRock = computerChoice === "rock";
+        console.log("isComputerChoiceRock:", isComputerChoiceRock);
+        const isComputerChoicePaper = computerChoice === "paper";
+        console.log("isComputerChoicePaper:", isComputerChoicePaper);
+        const isComputerChoiceScissors = computerChoice === "scissors";
+        console.log("isComputerChoiceScissors:", isComputerChoiceScissors);
+
+        console.log("Evaluating game conditions...");
+        if (isHumanChoiceRock && isComputerChoiceRock) {
+          console.log("Condition matched: Human Rock vs Computer Rock");
+          console.log(`You Tie! ${humanChoice} ties ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else if (isHumanChoiceRock && isComputerChoicePaper) {
+          console.log("Condition matched: Human Rock vs Computer Paper");
+          console.log(`You Lose! ${computerChoice} beats ${humanChoice}`);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else if (isHumanChoiceRock && isComputerChoiceScissors) {
+          console.log("Condition matched: Human Rock vs Computer Scissors");
+          console.log(`You Win! ${humanChoice} beats ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+        } else if (isHumanChoicePaper && isComputerChoiceRock) {
+          console.log("Condition matched: Human Paper vs Computer Rock");
+          console.log(`You Win! ${humanChoice} beats ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+        } else if (isHumanChoicePaper && isComputerChoicePaper) {
+          console.log("Condition matched: Human Paper vs Computer Paper");
+          console.log(`You Tie! ${humanChoice} ties ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else if (isHumanChoicePaper && isComputerChoiceScissors) {
+          console.log("Condition matched: Human Paper vs Computer Scissors");
+          console.log(`You Lose! ${computerChoice} beats ${humanChoice}`);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else if (isHumanChoiceScissors && isComputerChoiceRock) {
+          console.log("Condition matched: Human Scissors vs Computer Rock");
+          console.log(`You Lose! ${computerChoice} beats ${humanChoice}`);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else if (isHumanChoiceScissors && isComputerChoicePaper) {
+          console.log("Condition matched: Human Scissors vs Computer Paper");
+          console.log(`You Win! ${humanChoice} beats ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+        } else if (isHumanChoiceScissors && isComputerChoiceScissors) {
+          console.log("Condition matched: Human Scissors vs Computer Scissors");
+          console.log(`You Tie! ${humanChoice} ties ${computerChoice}`);
+          humanScore += 1;
+          console.log("humanScore incremented to:", humanScore);
+          computerScore += 1;
+          console.log("computerScore incremented to:", computerScore);
+        } else {
+          console.log("No condition matched - this should not happen");
+        }
+
+        console.log("Round summary:");
+        console.log("human choice:", humanChoice);
+        console.log("computer choice:", computerChoice);
+        console.log("End of playRound()");
+      }
+
+      function playGame() {
+        console.log("playGame() called - starting 5 rounds");
+        console.log("Playing round 1");
+        playRound();
+        console.log("Playing round 2");
+        playRound();
+        console.log("Playing round 3");
+        playRound();
+        console.log("Playing round 4");
+        playRound();
+        console.log("Playing round 5");
+        playRound();
+
+        console.log("All rounds complete");
+        console.log(
+          `The final score was human; ${humanScore} to computer; ${computerScore}`
+        );
+
+        console.log("Evaluating final winner...");
+        if (humanScore > computerScore) {
+          console.log("Human wins!");
+          alert("Congratulation! You win.");
+        } else if (computerScore > humanScore) {
+          console.log("Computer wins!");
+          alert("You lose.");
+        } else {
+          console.log("It's a tie!");
+          alert("Oh no, you tied!");
+        }
+        console.log("End of playGame()");
+      }
+
+      console.log("Script execution started");
+      playGame();
+      console.log("Script execution completed");
+    </script>
+  </body>
+</html>
+
