@@ -4,6 +4,102 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors</title>
+
+    <style>
+      .center {
+        text-align: center;
+      }
+
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+
+        button {
+          width: 200px;
+          padding: 16px;
+          cursor: pointer;
+          border: none;
+          border-radius: 8px;
+          font-size: 18px;
+          font-weight: bold;
+          color: white;
+        }
+
+        #rock-btn {
+          background-color: yellow; /* Yellow for Rock */
+          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+            1px 1px 0 #000;
+          border: 2px solid;
+          border-color: black;
+        }
+
+        #paper-btn {
+          background-color: #557bec; /* Blue for Paper */
+          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+            1px 1px 0 #000;
+          border: 2px solid;
+          border-color: black;
+        }
+
+        #scissors-btn {
+          background-color: rgb(69, 226, 69); /* Tomato red for Scissors */
+          text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+            1px 1px 0 #000;
+          border: 2px solid;
+          border-color: black;
+        }
+
+        #rock-btn:hover {
+          background-color: #e5f24f; /* Darker brown on hover */
+        }
+
+        #paper-btn:hover {
+          background-color: #63aaf0; /* Brighter blue on hover */
+        }
+
+        #scissors-btn:hover {
+          background-color: #4ff296; /* Darker red on hover */
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #reset-btn {
+        display: block;
+        margin: 20px auto 0;
+        padding: 12px 24px;
+        font-size: 16px;
+        /* add your styling */
+      }
+
+      #reset-btn.hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1 class="center">Rock, Paper, Scissors</h1>
+      <h2 id="round" class="center"></h2>
+      <h2 id="human-score" class="center"></h2>
+      <h2 id="computer-score" class="center"></h2>
+      <br />
+
+      <div class="button-container">
+        <h3 class="center">Click a button to play a round!</h3>
+
+        <button id="rock-btn">Rock</button>
+        <button id="paper-btn">Paper</button>
+        <button id="scissors-btn">Scissors</button>
+      </div>
+    </div>
+
+    <h2 id="end-game" class="hidden center"></h2>
+    <button id="reset-btn" class="hidden center">Play Again</button>
   </head>
   <body>
     <script>
@@ -13,6 +109,13 @@
       // keep score
       // play game (5 rounds) - playGame
 
+      let humanScore = 0;
+      let computerScore = 0;
+      let round = 1;
+
+      function getHumanChoice() {
+        const humanChoice = prompt("Rock, Paper, or Scissors?");
+        const result = humanChoice ? humanChoice.toLowerCase() : "";
       console.log("Initializing game - setting up scores");
       let humanScore = 0;
       console.log("humanScore initialized to:", humanScore);
@@ -52,6 +155,162 @@
         // return scissors
       }
 
+      function playRound(humanChoice) {
+        // const humanChoice = getHumanChoice();
+        const computerChoice = getComputerChoice();
+
+        const isHumanChoiceRock = humanChoice === "rock";
+        const isHumanChoicePaper = humanChoice === "paper";
+        const isHumanChoiceScissors = humanChoice === "scissors";
+
+        const isComputerChoiceRock = computerChoice === "rock";
+        const isComputerChoicePaper = computerChoice === "paper";
+        const isComputerChoiceScissors = computerChoice === "scissors";
+
+        console.log("Evaluating game conditions...");
+        if (isHumanChoiceRock && isComputerChoiceRock) {
+          humanScore += 1;
+          computerScore += 1;
+        } else if (isHumanChoiceRock && isComputerChoicePaper) {
+          computerScore += 1;
+        } else if (isHumanChoiceRock && isComputerChoiceScissors) {
+          humanScore += 1;
+        } else if (isHumanChoicePaper && isComputerChoiceRock) {
+          humanScore += 1;
+        } else if (isHumanChoicePaper && isComputerChoicePaper) {
+          humanScore += 1;
+          computerScore += 1;
+        } else if (isHumanChoicePaper && isComputerChoiceScissors) {
+          computerScore += 1;
+        } else if (isHumanChoiceScissors && isComputerChoiceRock) {
+          computerScore += 1;
+        } else if (isHumanChoiceScissors && isComputerChoicePaper) {
+          humanScore += 1;
+        } else if (isHumanChoiceScissors && isComputerChoiceScissors) {
+          humanScore += 1;
+          computerScore += 1;
+        } else {
+        }
+
+        round += 1;
+        setScore();
+
+        if (round > 5) {
+          endGame();
+        }
+      }
+
+      function endGame() {
+        const roundElement = document.querySelector("#round");
+        roundElement.textContent = "Game Over!";
+        // hide buttons
+        const btnContainer = document.querySelector(".button-container");
+        btnContainer.style.display = "none";
+
+        // show play the results of the game
+        const endGameElement = document.querySelector("#end-game");
+        endGameElement.classList.remove("hidden");
+        // endGameElement.textContent = "test";
+
+        const resetButton = document.querySelector("#reset-btn");
+        resetButton.classList.remove("hidden");
+
+        if (humanScore > computerScore) {
+          endGameElement.textContent = "Congratulation! You win 🎉";
+          endGameElement.style.color = "green";
+        } else if (computerScore > humanScore) {
+          endGameElement.textContent = "You lose 😢";
+          endGameElement.style.color = "red";
+        } else {
+          endGameElement.textContent = "Oh no, you tied 😒";
+        }
+      }
+
+      function playGame() {
+        // console.log("playGame() called - starting 5 rounds");
+        // console.log("Playing round 1");
+        // playRound();
+        // console.log("Playing round 2");
+        // playRound();
+        // console.log("Playing round 3");
+        // playRound();
+        // console.log("Playing round 4");
+        // playRound();
+        // console.log("Playing round 5");
+        // playRound();
+
+        if (humanScore > computerScore) {
+          alert("Congratulation! You win.");
+        } else if (computerScore > humanScore) {
+          alert("You lose.");
+        } else {
+          alert("Oh no, you tied!");
+        }
+      }
+
+      function resetGame() {
+        // reset scores and round
+        humanScore = 0;
+        omputerScore = 0;
+        round = 1;
+
+        // Hide end game message
+        const endGameElement = document.querySelector("#end-game");
+        endGameElement.classList.add("hidden");
+
+        // Hide reset button
+        const resetButton = document.querySelector("#reset-btn");
+        resetButton.classList.add("hidden");
+
+        // Show game buttons again
+        const btnContainer = document.querySelector(".button-container");
+        btnContainer.style.display = "flex";
+
+        // Update score display
+        setScore();
+      }
+
+      function setScore() {
+        const roundElement = document.querySelector("#round");
+        const humanScoreElement = document.querySelector("#human-score");
+        const computerScoreElement = document.querySelector("#computer-score");
+
+        roundElement.textContent = `Round: ${round}`;
+        humanScoreElement.textContent = `Human Score: ${humanScore}`;
+        computerScoreElement.textContent = `Computer Score: ${computerScore}`;
+      }
+
+      function setupButtonListeners() {
+        const rockButton = document.querySelector("#rock-btn");
+        const paperButton = document.querySelector("#paper-btn");
+        const scissorsButton = document.querySelector("#scissors-btn");
+        const resetButton = document.querySelector("#reset-btn");
+
+        rockButton.addEventListener("click", function playRoundWithRock() {
+          playRound("rock");
+          // setScore();
+        });
+
+        paperButton.addEventListener("click", function playRoundWithPaper() {
+          playRound("paper");
+          // setScore();
+        });
+
+        scissorsButton.addEventListener(
+          "click",
+          function playRoundWithScissors() {
+            playRound("scissors");
+            // setScore();
+          }
+        );
+
+        resetButton.addEventListener("click", function () {
+          resetGame();
+        });
+      }
+
+      setScore();
+      setupButtonListeners();
       function playRound() {
         console.log("playRound() called - starting new round");
         const humanChoice = getHumanChoice();
