@@ -102,6 +102,8 @@
 
     <h2 id="end-game" class="hidden center"></h2>
     <button id="reset-btn" class="hidden center">Play Again</button>
+  </head>
+  <body>
     <script>
       // get human choice - getHumanChoice
       // get computer choice - getComputerChoice
@@ -116,6 +118,19 @@
       function getHumanChoice() {
         const humanChoice = prompt("Rock, Paper, or Scissors?");
         const result = humanChoice ? humanChoice.toLowerCase() : "";
+      console.log("Initializing game - setting up scores");
+      let humanScore = 0;
+      console.log("humanScore initialized to:", humanScore);
+      let computerScore = 0;
+      console.log("computerScore initialized to:", computerScore);
+
+      function getHumanChoice() {
+        console.log("getHumanChoice() called");
+        console.log("Prompting user for choice");
+        const humanChoice = prompt("Rock, Paper, or Scissors?");
+        console.log("User entered:", humanChoice);
+        const result = humanChoice ? humanChoice.toLowerCase() : "";
+        console.log("Returning normalized choice:", result);
         return result;
       }
 
@@ -304,11 +319,8 @@
         }
       }
 
-      // Wait for DOM to be fully loaded before initializing
-      document.addEventListener("DOMContentLoaded", function () {
-        setScore();
-        setupButtonListeners();
-      });
+      setScore();
+      setupButtonListeners();
     </script>
   </body>
 </html>
