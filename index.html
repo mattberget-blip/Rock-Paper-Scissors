@@ -310,8 +310,11 @@
         }
       }
 
-      setScore();
-      setupButtonListeners();
+      // Wait for DOM to be fully loaded before initializing
+      document.addEventListener("DOMContentLoaded", function() {
+        setScore();
+        setupButtonListeners();
+      });
     </script>
   </body>
 </html>
