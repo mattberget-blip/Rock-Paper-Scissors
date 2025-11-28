@@ -73,6 +73,8 @@
         margin: 20px auto 0;
         padding: 12px 24px;
         font-size: 16px;
+        cursor: pointer;
+        border-radius: 8px;
         /* add your styling */
       }
 
@@ -236,7 +238,7 @@
       function resetGame() {
         // reset scores and round
         humanScore = 0;
-        omputerScore = 0;
+        computerScore = 0;
         round = 1;
 
         // Hide end game message
@@ -271,31 +273,42 @@
         const scissorsButton = document.querySelector("#scissors-btn");
         const resetButton = document.querySelector("#reset-btn");
 
-        rockButton.addEventListener("click", function playRoundWithRock() {
-          playRound("rock");
-          // setScore();
-        });
-
-        paperButton.addEventListener("click", function playRoundWithPaper() {
-          playRound("paper");
-          // setScore();
-        });
-
-        scissorsButton.addEventListener(
-          "click",
-          function playRoundWithScissors() {
-            playRound("scissors");
+        if (rockButton) {
+          rockButton.addEventListener("click", function playRoundWithRock() {
+            playRound("rock");
             // setScore();
-          }
-        );
+          });
+        }
 
-        resetButton.addEventListener("click", function () {
-          resetGame();
-        });
+        if (paperButton) {
+          paperButton.addEventListener("click", function playRoundWithPaper() {
+            playRound("paper");
+            // setScore();
+          });
+        }
+
+        if (scissorsButton) {
+          scissorsButton.addEventListener(
+            "click",
+            function playRoundWithScissors() {
+              playRound("scissors");
+              // setScore();
+            }
+          );
+        }
+
+        if (resetButton) {
+          resetButton.addEventListener("click", function () {
+            resetGame();
+          });
+        }
       }
 
-      setScore();
-      setupButtonListeners();
+      // Wait for DOM to be fully loaded before initializing
+      document.addEventListener("DOMContentLoaded", function () {
+        setScore();
+        setupButtonListeners();
+      });
     </script>
   </body>
 </html>
